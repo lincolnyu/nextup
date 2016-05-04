@@ -38,8 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\HashingHelper.cs" />
-    <Compile Include="ScenarioManager.cs" />
-    <Compile Include="ValueChanges\ValueChangeItem.cs" />
+    <Compile Include="Helpers\PropertyHelper.cs" />
+    <Compile Include="CoreStorage\Repository.cs" />
+    <Compile Include="CoreStorage\ValueHolder.cs" />
+    <Compile Include="MultiScenario\ScenarioManager.cs" />
+    <Compile Include="MultiScenario\XpScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

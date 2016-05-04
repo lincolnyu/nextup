@@ -2,38 +2,38 @@
 using System.Reflection;
 using NextUp.Helpers;
 
-namespace NextUp.ValueChanges
+namespace NextUp.CoreStorage
 {
-    public class ValueChangeItem : IEquatable<ValueChangeItem>
+    public class ValueHolder : IEquatable<ValueHolder>
     {
-        public ValueChangeItem(object ownerObject, string propertyName, object space)
+        public ValueHolder(object ownerObject, string propertyName, object scenario)
         {
             OwnerObject = ownerObject;
             PropertyName = propertyName;
-            Space = space;
+            Scenario = scenario;
         }
 
         public object OwnerObject { get; }
 
         public string PropertyName { get; }
 
-        public object Space { get; }
+        public object Scenario { get; }
 
         public object Value { get; set; }
 
-        public bool Equals(ValueChangeItem other)
+        public bool Equals(ValueHolder other)
         {
-            return OwnerObject == other.OwnerObject && PropertyName == other.PropertyName && Space == other.Space;
+            return OwnerObject == other.OwnerObject && PropertyName == other.PropertyName && Scenario == other.Scenario;
         }
 
         public override bool Equals(object obj)
         {
-            return (obj as ValueChangeItem)?.Equals(this) ?? false;
+            return (obj as ValueHolder)?.Equals(this) ?? false;
         }
 
         public override int GetHashCode()
         {
-            return HashingHelper.GetHashCodeForItems(OwnerObject, PropertyName, Space);
+            return HashingHelper.GetHashCodeForItems(OwnerObject, PropertyName, Scenario);
         }
 
         public void Execute()
