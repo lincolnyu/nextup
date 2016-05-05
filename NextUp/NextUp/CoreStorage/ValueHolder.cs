@@ -36,7 +36,13 @@ namespace NextUp.CoreStorage
             return HashingHelper.GetHashCodeForItems(OwnerObject, PropertyName, Scenario);
         }
 
-        public void Execute()
+        /// <summary>
+        ///  Apply this value item
+        /// </summary>
+        /// <remarks>
+        ///  With lazy loading and caching, this is not used
+        /// </remarks>
+        public void Apply()
         {
             var prop = OwnerObject.GetType().GetRuntimeProperty(PropertyName);
             prop.SetValue(OwnerObject, Value);

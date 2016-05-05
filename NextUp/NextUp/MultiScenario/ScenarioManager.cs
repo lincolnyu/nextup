@@ -1,4 +1,5 @@
 ﻿using NextUp.CoreStorage;
+using System.Linq;
 
 namespace NextUp.MultiScenario
 {
@@ -11,8 +12,6 @@ namespace NextUp.MultiScenario
             CurrentScenario = baseScenario;
         }
 
-        public bool IsChangingScenario { get; private set; }
-
         public object CurrentScenario
         {
             get
@@ -23,10 +22,11 @@ namespace NextUp.MultiScenario
             {
                 if (_currentScenario != value)
                 {
-                    IsChangingScenario = true;
                     _currentScenario = value;
-                    Execute(_currentScenario);
-                    IsChangingScenario = false;
+                    foreach (var o in AffectedObjects.Cast<ILazyUpdate>())
+                    {
+                        o.ScenarioDataOutdated = true;
+                    }
                 }
             }
         }

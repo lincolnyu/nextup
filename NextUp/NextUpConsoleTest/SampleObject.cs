@@ -1,9 +1,10 @@
 ﻿using NextUp.MultiScenario;
 using NextUp.Helpers;
+using System;
 
 namespace NextUpConsoleTest
 {
-    public class SampleObject
+    public class SampleObject : ILazyUpdate
     {
         public static ScenarioManager ScenarioManager { get; set; }
 
@@ -11,12 +12,31 @@ namespace NextUpConsoleTest
 
         public int SampleProperty
         {
-            get { return _sampleProperty; }
+            get
+            {
+                UpdateIfNeeded();
+                return _sampleProperty;
+            }
             set
             {
-                ScenarioManager.SetValue(this, "SampleProperty", value);
                 _sampleProperty = value;
+                var xp = ScenarioManager.CurrentScenario as XpScenario;
+                if (xp != null) xp.SetValue(ScenarioManager, this, "SampleProperty", value);
+                else this.SetValue(ScenarioManager, "SampleProperty", value);
             }
+        }
+
+        public bool ScenarioDataOutdated
+        {
+            get; set;
+        }
+
+        private void UpdateIfNeeded()
+        {
+            if (!ScenarioDataOutdated) return;
+            var xp = ScenarioManager.CurrentScenario as XpScenario;
+            if (xp != null) xp.TryGetValue(ScenarioManager, this, "SampleProperty", out _sampleProperty);
+            else this.TryGetValue(ScenarioManager, "SampleProperty", out _sampleProperty);
         }
     }
 }

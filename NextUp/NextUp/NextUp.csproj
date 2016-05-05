@@ -41,6 +41,7 @@
     <Compile Include="Helpers\PropertyHelper.cs" />
     <Compile Include="CoreStorage\Repository.cs" />
     <Compile Include="CoreStorage\ValueHolder.cs" />
+    <Compile Include="MultiScenario\ILazyUpdate.cs" />
     <Compile Include="MultiScenario\ScenarioManager.cs" />
     <Compile Include="MultiScenario\XpScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

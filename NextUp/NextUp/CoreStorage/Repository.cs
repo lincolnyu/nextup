@@ -8,6 +8,8 @@ namespace NextUp.CoreStorage
 
         public IDictionary<ValueHolder, ValueHolder> Values { get; } = new Dictionary<ValueHolder, ValueHolder>();
 
+        public ISet<object> AffectedObjects { get; } = new HashSet<object>();
+
         public void AddValueHolder(ValueHolder valueHolder)
         {
             Values[valueHolder] = valueHolder;
@@ -17,6 +19,7 @@ namespace NextUp.CoreStorage
                 values = new HashSet<ValueHolder>();
                 ScenarioToValues[valueHolder.Scenario] = values;
             }
+            AffectedObjects.Add(valueHolder.OwnerObject);
             values.Add(valueHolder);
         }
 
@@ -52,14 +55,21 @@ namespace NextUp.CoreStorage
             return result;
         }
 
-        public void Execute(object scenario)
+        /// <summary>
+        ///  Sets the values on the relevant properties for the scenario
+        /// </summary>
+        /// <param name="scenario">The scenario to execute</param>
+        /// <remarks>
+        ///  with lazy loading and caching this is not used
+        /// </remarks>
+        public void Apply(object scenario)
         {
             ISet<ValueHolder> valueHolders;
             if (ScenarioToValues.TryGetValue(scenario, out valueHolders))
             {
                 foreach (var valueHolder in valueHolders)
                 {
-                    valueHolder.Execute();
+                    valueHolder.Apply();
                 }
             }
         }
