@@ -1,6 +1,5 @@
 ﻿using NextUp.MultiScenario;
 using NextUp.Helpers;
-using System;
 
 namespace NextUpConsoleTest
 {
